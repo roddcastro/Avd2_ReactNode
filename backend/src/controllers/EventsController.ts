@@ -97,4 +97,3 @@ class EventsController {
 }
 
 export { EventsController }
-
