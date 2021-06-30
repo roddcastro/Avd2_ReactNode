@@ -17,6 +17,8 @@ interface Listagem {
   local: string;
   diasemana: string;
   horario: string;
+  like: number;
+  dislike: number;
 }
 
 const Dashboard: React.FC = () => {
@@ -58,6 +60,13 @@ const Dashboard: React.FC = () => {
   async function like(id: string){
     await api.post(`/events/like/${id}`)
     setEventos(eventos.filter(eve => eve.id === id))
+    window.location.reload(true);
+  }
+
+  async function dislike(id: string){
+    await api.post(`/events/dislike/${id}`)
+    setEventos(eventos.filter(eve => eve.id === id))
+    window.location.reload(true);
   }
 
   return (
@@ -89,6 +98,8 @@ const Dashboard: React.FC = () => {
           <th>Local</th>
           <th>Dia</th>
           <th>Horário</th>
+          <th>Likes</th>
+          <th>Dislikes</th>
           <th>Ações</th>
         </tr>
         {eventos.map((eve, indice) =>
@@ -97,7 +108,9 @@ const Dashboard: React.FC = () => {
           <td>{eve.local} </td>
           <td>{eve.diasemana} </td>
           <td>{eve.horario} </td>
-          <td><button type="button" onClick={() => handleDelete(eve.id)}>Excluir</button> <button type="button" onClick={() => like(eve.id)}>Like</button> <button type="button">Dislike</button></td>
+          <td>{eve.like} </td>
+          <td>{eve.dislike} </td>
+          <td><button type="button" onClick={() => handleDelete(eve.id)}>Excluir</button> <button type="button" onClick={() => like(eve.id)}>Like</button> <button type="button" onClick={() => dislike(eve.id)}>Dislike</button></td>
         </tr>
         )}
         </table>
